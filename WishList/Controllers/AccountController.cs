@@ -62,9 +62,12 @@ namespace WishList.Controllers
 
             var result = _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
             if (!result.Result.Succeeded)
+            {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt");
+                return View("Login", model);
+            }
 
-            return RedirectToAction("Item.Index");
+            return RedirectToAction("Index", "Item");
         }
 
         [HttpPost]
@@ -72,7 +75,7 @@ namespace WishList.Controllers
         public IActionResult Logout()
         {
             _signInManager.SignOutAsync();
-            return RedirectToAction("Home.Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
